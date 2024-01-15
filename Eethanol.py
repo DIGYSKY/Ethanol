@@ -29,7 +29,7 @@ def pression_carburant(ethanol_percentage=None, pression=None):
         return round(pressure, 2)
     
     elif pression is not None:
-        # Utiliser la recherche binaire pour inverser la relation
+        # Utilisation de la recherche binaire pour inverser la relation
         min_ethanol, max_ethanol = 0, 100
         tolerance = 1e-6  # Tolérance pour la précision
         
