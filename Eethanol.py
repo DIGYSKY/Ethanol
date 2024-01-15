@@ -1,4 +1,3 @@
-# Algorithme permettant de calculer la pression d'injection nécessaire selon un pourcentage d'éthanol
 # By Lilyan CHAUVEAU 
 # 15/01/2024
 # Version : 1.0.0
@@ -12,34 +11,36 @@
 # of this license document, but changing it is not allowed.
 # See the LICENSE file
 
+# Algorithm to calculate the injection pressure required according to an ethanol percentage
+
 import math
 
-def pression_carburant(ethanol_percentage=None, pression=None):
-    # Fonction y0 pour le pourcentage d'ethanol supplémentaire
+def fuel_pressure(ethanol_percentage=None, pressure=None):
+    # y0 function for the additional ethanol percentage
     y0 = lambda x: 2.09853E-12*x**6 - 4.97437E-10*x**5 + 4.95509E-08*x**4 - 2.23183E-06*x**3 + 6.72588E-05*x**2 + 8.12361E-04*x + 1.00186E+00
     
     if ethanol_percentage is not None:
-        # Calcul de la quantité additionnelle (y0 * 80)
-        quantite_additionnelle = y0(ethanol_percentage) * 80
+        # Calculation of the additional quantity (y0 * 80)
+        additional_quantity = y0(ethanol_percentage) * 80
         
-        # Fonction y2 pour la pression de carburant
+        # Function y2 for fuel pressure
         y2 = lambda x: 0.5083 * (math.exp(0.0219 * x))
         
-        # Calcul de la pression de carburant
-        pressure = y2(quantite_additionnelle)
+        # Calculate fuel pressure
+        pressure = y2(additional_quantity)
         
         return round(pressure, 2)
     
-    elif pression is not None:
-        # Utilisation de la recherche binaire pour inverser la relation
+    elif pressure is not None:
+        # Use binary search to inverse the relationship
         min_ethanol, max_ethanol = 0, 100
-        tolerance = 1e-6  # Tolérance pour la précision
+        tolerance = 1e-6  # Tolerance for precision
         
         while max_ethanol - min_ethanol > tolerance:
             mid_ethanol = (min_ethanol + max_ethanol) / 2
-            current_pressure = pression_carburant(ethanol_percentage=mid_ethanol)
+            current_pressure = fuel_pressure(ethanol_percentage=mid_ethanol)
             
-            if current_pressure < pression:
+            if current_pressure < pressure:
                 min_ethanol = mid_ethanol
             else:
                 max_ethanol = mid_ethanol
@@ -47,20 +48,20 @@ def pression_carburant(ethanol_percentage=None, pression=None):
         return round(mid_ethanol, 2)
     
     else:
-        raise ValueError("Veuillez spécifier le pourcentage d'éthanol ou la pression.")
+        raise ValueError("Please specify the ethanol percentage or pressure.")
 
-# Demander à l'utilisateur de choisir entre pourcentage d'éthanol ou pression
-choix = input("Choisissez 'e' pour le pourcentage d'éthanol ou 'p' pour la pression : ")
+# Ask the user to choose between ethanol percentage or pressure
+choice = input("Choose 'e' for ethanol percentage or 'p' for pressure: ")
 
-if choix.lower() == 'e':
-    ethanol_percentage = float(input("Entrez le pourcentage d'éthanol : "))
-    result = pression_carburant(ethanol_percentage=ethanol_percentage)
-    print(f"La pression de carburant pour {ethanol_percentage}% d'éthanol est : {result} bars.")
+if choice.lower() == 'e':
+    ethanol_percentage = float(input("Enter the ethanol percentage: "))
+    result = fuel_pressure(ethanol_percentage=ethanol_percentage)
+    print(f"The fuel pressure for {ethanol_percentage}% ethanol is: {result} bars.")
     
-elif choix.lower() == 'p':
-    pression = float(input("Entrez la pression : "))
-    result = pression_carburant(pression=pression)
-    print(f"Le pourcentage d'éthanol pour une pression de {pression} bars est : {result}%.")
-
+elif choice.lower() == 'p':
+    pressure = float(input("Enter the pressure: "))
+    result = fuel_pressure(pressure=pressure)
+    print(f"The ethanol percentage for a pressure of {pressure} bars is: {result}%.")
+    
 else:
-    print("Choix invalide. Veuillez choisir 'e' ou 'p'.")
+    print("Invalid choice. Please choose 'e' or 'p'.")
