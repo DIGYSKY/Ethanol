@@ -1,6 +1,7 @@
 # By Lilyan CHAUVEAU 
 # 15/01/2024
 # Version : 1.0.0
+# Python 3
 
 # GNU GENERAL PUBLIC LICENSE
 
