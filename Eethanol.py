@@ -1,6 +1,7 @@
 # Algorithme permettant de calculer la pression d'injection nécessaire selon un pourcentage d'éthanol
 # By Lilyan CHAUVEAU 
 # 15/01/2024
+# Version : 1.0.0
 
 # GNU GENERAL PUBLIC LICENSE
 
