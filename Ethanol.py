@@ -56,6 +56,22 @@ def fuel_pressure(ethanol_percentage=None, pressure=None, Print=False):
     else:
         raise ValueError("Please specify the ethanol percentage or pressure.")
 
+
+print(Fore.RED + Style.BRIGHT + f"By Lilyan CHAUVEAU (DIGYSKY)")
+print(Fore.RED + f"Version : 1.2.3")
+print(Fore.RED + f" ")
+print(Fore.RED + f"GNU GENERAL PUBLIC LICENSE")
+print(Fore.RED + f" ")
+print(Fore.RED + f"                       Version 3, 29 June 2007")
+print(Fore.RED + f" ")
+print(Fore.RED + f"Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>")
+print(Fore.RED + f"Everyone is permitted to copy and distribute verbatim copies")
+print(Fore.RED + f"of this license document, but changing it is not allowed.")
+print(Fore.RED + f"See the LICENSE file")
+print(Fore.RED + f" ")
+print(Fore.GREEN + f"Algorithm to calculate the injection pressure required according to an ethanol percentage")
+print(Fore.RESET + Style.RESET_ALL + f" ")
+
 while 1==1:
     # Ask the user to choose between ethanol percentage or pressure
     choice = input("Choose 'e' for ethanol percentage or 'p' for pressure: ")
