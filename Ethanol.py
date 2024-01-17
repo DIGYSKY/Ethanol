@@ -19,20 +19,33 @@ from colorama import init, Fore, Back, Style
 
 init()
 
-def fuel_pressure(ethanol_percentage=None, pressure=None, Print=False):
+def fuel_pressure(ethanol_percentage=None, pressure=None, additional_percentage=None, Print=False):
     # y0 function for the additional ethanol percentage
     y0 = lambda x: 2.09853E-12*x**6 - 4.97437E-10*x**5 + 4.95509E-08*x**4 - 2.23183E-06*x**3 + 6.72588E-05*x**2 + 8.12361E-04*x + 1.00186E+00
     
     if ethanol_percentage is not None:
-        # Calculation of the additional quantity (y0 * 80)
+        # Calcul de la quantité additionnelle (y0 * 80)
         additional_quantity = y0(ethanol_percentage) * 80
         if Print:
-            print(Fore.GREEN + f"Percentage additional: {round(additional_quantity/80*100-100, 2)}%" + Fore.RESET)
-        
-        # Function y2 for fuel pressure
+            print(Fore.GREEN + f"Pourcentage additionnel : {round(additional_quantity/80*100-100, 2)}%" + Fore.RESET)
+
+        # Fonction y2 pour la pression de carburant
         y2 = lambda x: 0.5083 * (math.exp(0.0219 * x))
         
-        # Calculate fuel pressure
+        # Calcul de la pression de carburant
+        pressure = y2(additional_quantity)
+        
+        return round(pressure, 2)
+        
+    elif additional_percentage is not None:
+        # Calcul du pourcentage d'éthanol correspondant à la quantité additionnelle
+        additional_quantity = (additional_percentage + 100) / 100 * 80
+        ethanol_percentage = additional_quantity / y0(1)  # Utilise y0(1) pour inverser le calcul
+    
+        # Fonction y2 pour la pression de carburant
+        y2 = lambda x: 0.5083 * (math.exp(0.0219 * x))
+        
+        # Calcul de la pression de carburant
         pressure = y2(additional_quantity)
         
         return round(pressure, 2)
@@ -74,7 +87,7 @@ print(Fore.RESET + Style.RESET_ALL + f" ")
 
 while 1==1:
     # Ask the user to choose between ethanol percentage or pressure
-    choice = input("Choose 'e' for ethanol percentage or 'p' for pressure: ")
+    choice = input("Choose 'e' for ethanol percentage or 'p' for pressure or 'a' for percentage addional | 'q' to exit: ")
 
     if choice.lower() == 'e':
         ethanol_percentage = float(input("Enter the ethanol percentage: "))
@@ -86,6 +99,14 @@ while 1==1:
         result = fuel_pressure(pressure=pressure)
         fuel_pressure(ethanol_percentage=result, Print=True)
         print(Fore.GREEN + f"The ethanol percentage for a pressure of {pressure} bars is: {result}%." + Fore.RESET)
+
+    elif choice.lower() == 'a':
+        additional_percentage = float(input("Entrez le pourcentage d'injection additionnel (ex: +25) : "))
+        result = fuel_pressure(additional_percentage=additional_percentage, Print=True)
+        print(Fore.GREEN + f"La pression de carburant correspondante est : {result} bars." + Fore.RESET)
+
+    elif choice.lower() == 'q':
+        break
         
     else:
         print("Invalid choice. Please choose 'e' or 'p'.")
