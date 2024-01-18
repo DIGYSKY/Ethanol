@@ -71,7 +71,7 @@ def fuel_pressure(ethanol_percentage=None, pressure=None, additional_percentage=
 
 
 print(Fore.RED + Style.BRIGHT + f"By Lilyan CHAUVEAU (DIGYSKY)")
-print(Fore.RED + f"Version : 1.2.3")
+print(Fore.RED + f"Version : 1.2.4")
 print(Fore.RED + f" ")
 print(Fore.RED + f"GNU GENERAL PUBLIC LICENSE")
 print(Fore.RED + f" ")
@@ -103,7 +103,7 @@ while 1==1:
     elif choice.lower() == 'a':
         additional_percentage = float(input("Entrez le pourcentage d'injection additionnel (ex: +25) : "))
         result = fuel_pressure(additional_percentage=additional_percentage, Print=True)
-        print(Fore.GREEN + f"La pression de carburant correspondante est : {result} bars." + Fore.RESET)
+        print(Fore.GREEN + f"The corresponding fuel pressure is : {result} bars." + Fore.RESET)
 
     elif choice.lower() == 'q':
         break
